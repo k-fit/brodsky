@@ -58,7 +58,7 @@ print r.response.o['histogram']
 r = otter.Resource('searchcount', **kw)
 r(q=query, dynamic = 1)
 
-print r.reponse.o
+print r.response.o
 
 
 # list of trending terms - different than "top"

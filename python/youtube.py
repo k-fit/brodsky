@@ -21,6 +21,23 @@ yt_service.ProgrammaticLogin()
 
 client = gdata.youtube.service.YouTubeService()
 
+'''
+the client knows about all kinds of shit.  I don't see us using more than these (and not all of these I hope)
+apparently we don't need a key to access this stuff.  I haven't quite figured out the authentication business - but I can see these feeds
+client.GetMostDiscussedVideoFeed           
+client.GetMostLinkedVideoFeed             
+client.GetMostRecentVideoFeed              
+client.GetMostRespondedVideoFeed           
+client.GetMostViewedVideoFeed 
+client.GetRecentlyFeaturedVideoFeed       
+client.GetTopFavoritesVideoFeed            
+client.GetTopRatedVideoFeed                
+client.GetUserFavoritesFeed               
+client.GetWatchOnMobileVideoFeed           
+client.GetWithRetrie
+client.GetYouTubeRelatedVideoFeed
+'''
+
 feed = client.GetRecentlyFeaturedVideoFeed()
 for entry in feed.entry:
     print entry.title.text, entry.rating.average
@@ -33,7 +50,7 @@ feed = client.client.GetMostLinkedVideoFeed()
 for entry in feed.entry:
     print entry.title.text
 
-# there's all kinds of stuff you can access about the video.  some potentially interesting ones:
+# there's all kinds of stuff you can access about each video.  some potentially interesting ones:
 '''
 entry.statistics.view_count
 entry.statistics.favorite_count

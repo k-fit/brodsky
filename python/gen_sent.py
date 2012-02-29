@@ -27,7 +27,7 @@ response,content = client.request(url,method=r_method,body=r_body)
 print_content("sentiment", content)
 
 # INVOLVEMENT
-url2 = "http://qa.generalsentiment.com:8080/api/v1.php/getInvolvement"
+url = "http://qa.generalsentiment.com:8080/api/v1.php/getInvolvement"
 params = {"synsets": "Google\tgoogle\tGOOG\nMicrosoft\tMSFT\nObama\tBarack Obama", "startDate": "20110801", "endDate" : "20110901" }
 
 r_method= "POST"

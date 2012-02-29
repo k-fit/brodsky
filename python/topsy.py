@@ -41,11 +41,12 @@ for item in r.response.list.o:
 
 # get top 100 for the day, can also set 1k, 5k.  Can set different types or take all types.
 r = otter.Resource('top', **kw)
-r(thresh = 'top100', type = 'tweet')
+#r(thresh = 'top100', type = 'tweet')
+r(thresh = 'top1k', locale = 'en')
 
 for k in range(3):
     for item in r.response.list.o:
-        print item['author_name'], item['content'], item['date_alpha']
+        print item['content'], item['date_alpha'], item['target']['mytype']
     r.next_page()
 
 

@@ -27,8 +27,11 @@ def getYahooContent(u):
     entities = jresult['query']['results']['entities']['entity']
         
     elist = []
+    tags = set()
     for e in entities:
-        elist.append( {'score' : e['score'], 'text' : e['text']['content'] } )
+	if e['text']['content'] not in tags:
+	    elist.append( {'score' : e['score'], 'text' : e['text']['content'] } )
+	    tags.add(e['text']['content'])
     return ({'categories' : categories, 'entities' : elist})
         
 def visible(element):

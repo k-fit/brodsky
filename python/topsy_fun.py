@@ -7,6 +7,7 @@ import re
 from gen_sent_fun import *
 from yahoo import *
 from unidecode import unidecode
+import ast
 
 kw = otter.loadrc()
 
@@ -27,7 +28,7 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100'):
         for i in range(len(important_data)):  
         # call topsy histogram api, record histogram
             h = otter.Resource('searchhistogram', **kw)
-	    print important_data[i]
+	    #print important_data[i]
 	    title = unidecode(important_data[i]['target']['title'])
 	    url = unidecode(important_data[i]['target']['url'])
             print title, url

@@ -8,6 +8,7 @@ from gen_sent_fun import *
 from yahoo import *
 from unidecode import unidecode
 import ast
+import pprint
 
 kw = otter.loadrc()
 
@@ -40,5 +41,6 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100'):
             for k in range(len(important_data[i]['yahoo']['entities'])) : 
                 important_data[i]['gen_sent'].append (gen_sent(important_data[i]['yahoo']['entities'][k]['text'], start_date='20120215', end_date = '20120301', src = src, time_unit = time_unit))
 
-	    print "result: ", important_data[i]
+	    print "result: " 
+	    pprint.pprint(important_data[i])
 

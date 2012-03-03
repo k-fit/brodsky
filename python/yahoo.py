@@ -50,7 +50,7 @@ def getURLContent(u, thresh = 50):
 	    line = unidecode(line)
 	    line = line.replace("]", "")
 	    line = line.replace("[", "")
-	    line = line.replace("'", "\'")
+	    line = line.replace("'", "")
 	    line = line.replace("&", "\&")
             alltext += line.strip() + " "
     return alltext;

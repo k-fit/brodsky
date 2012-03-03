@@ -3,7 +3,7 @@ import sys
 sys.path.append("..")
 import keys
 import oauth2 as oauth
-
+import ast
 
 
 def gen_sent(input_words, start_date, end_date, src, time_unit):
@@ -31,8 +31,12 @@ def gen_sent(input_words, start_date, end_date, src, time_unit):
 	r_body = urllib.urlencode(params,doseq=True).replace('+','%20')
 	
 	response,content = client.request(url,method=r_method,body=r_body)
-
-	l = len(eval(content)['results'])
+	#print content
+	if 'error_message' in content:
+		l = 0
+	else :
+		content = content.replace(":null", ":0")
+		l = len(ast.literal_eval(content)['results'])
 	#print l 	
 	#print eval(content)
 	return {'dates': [eval(content)['results'][i]['date'] for i in range(l)], 'pos_ref': [eval(content)['results'][i]['positive_references'] for i in range(l)], 'neg_ref': [eval(content)['results'][i]['negative_references'] for i in range(l)], 'ref': [eval(content)['results'][i]['references'] for i in range(l)], 'sentiment': [eval(content)['results'][i]['sentiment'] for i in range(l)] }

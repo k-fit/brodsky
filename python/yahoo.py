@@ -23,9 +23,16 @@ def getYahooContent(u):
     if not jresult:      
 	return({'categories' : [], 'entities' : []})
     
-    categories = jresult['query']['results']['yctCategories']['yctCategory']
-    entities = jresult['query']['results']['entities']['entity']
-        
+    try:
+	categories = jresult['query']['results']['yctCategories']['yctCategory']
+    except:
+	categories = []
+    
+    try:    
+	entities = jresult['query']['results']['entities']['entity']
+    except:
+	entities = []
+    
     elist = []
     tags = set()
     for e in entities:

@@ -57,7 +57,10 @@ def visible(element):
 
 def getURLContent(u, debug = 0, thresh = 50):
     html = urllib.urlopen(u).read()
-    soup = BeautifulSoup.BeautifulSoup(html)
+    try:
+	soup = BeautifulSoup.BeautifulSoup(html)
+    except:
+	return ""
     texts = soup.findAll(text=True)
     visible_texts = filter(visible, texts)
     alltext = ""

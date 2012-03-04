@@ -28,7 +28,7 @@ def getYahooContent(u, debug):
     try:
 	categories = jresult['query']['results']['yctCategories']['yctCategory']
     except:
-	sys.exit(1)
+	#sys.exit(1)
 	categories = []
     
     try:    

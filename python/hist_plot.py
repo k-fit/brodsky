@@ -4,15 +4,16 @@ import numpy
 import matplotlib.dates
 import pylab
 import matplotlib
+import datetime
 from pylab import *
-from datetime import *
+#from datetime import *
 from matplotlib.dates import num2date
 from matplotlib.backends.backend_pdf import PdfPages	
 
 
 def hist_plot(call):
 	no_plots = 0
-	now = datetime.now().date()
+	now = datetime.datetime.now().date()
 	pp = PdfPages('topsy_' + str(now.month) + '-'+ str(now.day) + '.pdf')
 	for item in call:
 		try:
@@ -33,7 +34,7 @@ def hist_pl(L):
 	title(L['target']['title'])
 	for item in L['gen_sent']:
 		dates = item['dates']
-		dates_num = [date2num(datetime.strptime(str(dates[i]), '%Y%m%d')) for i in range(len(dates))]
+		dates_num = [date2num(datetime.datetime.strptime(str(dates[i]), '%Y%m%d')) for i in range(len(dates))]
 		ax.plot_date(dates_num, item['neg_ref'], 'b-', label = 'neg_ref')
 		ax.plot_date(dates_num, item['pos_ref'], 'y-', label = 'pos_ref')
 		ax.plot_date(dates_num, item['ref'], 'g-', label = 'ref')

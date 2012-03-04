@@ -26,6 +26,8 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug
             important_data += r.response.list.o
             r.next_page()
 	    print len(important_data)
+	    if debug:
+		if len(important_data) >= 100: break
 	print "done"
         
         for i in range(len(important_data)):  
@@ -36,7 +38,10 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug
 	    url = unidecode(important_data[i]['target']['url'])
             print title, url
 	    h(q = title, slice = 3600, period = 24 * 30)
-            important_data[i]['histogram'] = h.response.o['histogram']
+            try:
+		important_data[i]['histogram'] = h.response.o['histogram']
+	    except:
+		important_data[i]['histogram'] = []
             attempt = 0
 	    important_data[i]['yahoo'] = getYahooContent(url, debug)
             while important_data[i]['yahoo']['categories'] == [] and attempt < 3:

@@ -14,7 +14,7 @@ from hist_plot import *
 
 kw = otter.loadrc()
 
-def topsy(time_unit = 'day', src = 'all_internet', call = 'top100'):
+def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug = 0):
         r = otter.Resource('top', **kw)
         r(thresh = call, locale = 'en', perpage = 10) # note if call > 100, better do something else
         if (call != 'top100'):
@@ -37,7 +37,7 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100'):
             print title, url
 	    h(q = title, slice = 3600, period = 24 * 30)
             important_data[i]['histogram'] = h.response.o['histogram']
-            important_data[i]['yahoo'] = getYahooContent(url)
+            important_data[i]['yahoo'] = getYahooContent(url, debug)
             important_data[i]['gen_sent'] = []
 
             for k in range(len(important_data[i]['yahoo']['entities'])) : 
@@ -45,7 +45,15 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100'):
 
 	    print "result: " 
 	    pprint.pprint(important_data[i])
+<<<<<<< HEAD
 	
 #	hist_plot(important_data)
 	return important_data
+=======
+	if p:
+	    hist_plot(important_data)
+	#return important_data
+>>>>>>> 29bbeef22a5b1024efe002d17f2a27eb612c0229
 
+if __name__ == '__main__':
+    topsy(debug = 1)

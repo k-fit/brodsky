@@ -29,6 +29,7 @@ def hist_pl(L):
 		ax.plot_date(dates_num, item['pos_ref'], 'y-', label = 'pos_ref')
 		ax.plot_date(dates_num, item['ref'], 'g-', label = 'ref')
 
+	#ax.xaxis_date()
 	ax.xaxis.set_major_formatter(DateFormatter('%m \n %b'))
 	handles, labels = ax.get_legend_handles_labels()
 	legend(handles[0:3], labels[0:3])

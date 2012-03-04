@@ -50,9 +50,15 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug
 
 	    print "result: " 
 	    pprint.pprint(important_data[i])
+<<<<<<< HEAD
+	
+#	hist_plot(important_data)
+	return important_data
+=======
 	if p:
 	    hist_plot(important_data)
 	#return important_data
+>>>>>>> 29bbeef22a5b1024efe002d17f2a27eb612c0229
 
 if __name__ == '__main__':
     topsy(debug = 1)

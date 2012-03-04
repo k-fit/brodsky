@@ -1,14 +1,16 @@
 import urllib
 import sys
 sys.path.append("..")
-import keys
 import otter
 import re
-from gen_sent_fun import *
-from yahoo import *
 from unidecode import unidecode
 import ast
 import pprint
+
+import keys
+from gen_sent_fun import *
+from yahoo import *
+from hist_plot import *
 
 kw = otter.loadrc()
 
@@ -43,6 +45,7 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100'):
 
 	    print "result: " 
 	    pprint.pprint(important_data[i])
-
-	return important_data
+	
+	hist_plot(important_data)
+	#return important_data
 

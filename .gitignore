@@ -3,3 +3,4 @@ keys.pyc
 *~
 *.pyc
 *.py.sw*
+.DS_Store

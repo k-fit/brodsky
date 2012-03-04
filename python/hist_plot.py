@@ -1,4 +1,5 @@
 import matplotlib
+matplotlib.use('Agg') #so that plot windows don't pop up 
 import numpy
 import matplotlib.dates
 import pylab
@@ -8,12 +9,20 @@ from datetime import *
 from matplotlib.dates import num2date
 from matplotlib.backends.backend_pdf import PdfPages	
 
+
 def hist_plot(call):
-	pp = PdfPages('topsy.pdf')
+	no_plots = 0
+	now = datetime.now().date()
+	pp = PdfPages('topsy_' + str(now.month) + '-'+ str(now.day) + '.pdf')
 	for item in call:
-		hist_pl(item)
-		pp.savefig()
+		try:
+			hist_pl(item)
+			pp.savefig()
+		except ValueError:
+			no_plots += 1
+			
 	pp.close()
+	print "no_plots = " + str(no_plots)
 		
 
 def hist_pl(L):

@@ -46,6 +46,6 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100'):
 	    print "result: " 
 	    pprint.pprint(important_data[i])
 	
-	hist_plot(important_data)
-	#return important_data
+#	hist_plot(important_data)
+	return important_data
 

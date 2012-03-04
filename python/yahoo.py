@@ -10,22 +10,25 @@ import ast
 
 #url = 'http://www.cnn.com/2011/11/11/world/europe/greece-main/index.html'
 
-def getYahooContent(u):
+def getYahooContent(u, debug):
     key = keys.ydn_key
     querylang = "http://query.yahooapis.com/v1/public/yql?q=select * from contentanalysis.analyze where url=\'"+u +"\';&diagnostics=true&format=json&" + key
     
     jresult = queryattempt(querylang)
     if not jresult:
 	print "getting text"
-	text = getURLContent(u)
+	text = getURLContent(u, debug)
 	querylang =  "http://query.yahooapis.com/v1/public/yql?q=select * from contentanalysis.analyze where text=\'"+ text +"\';&diagnostics=true&format=json&" + key
 	jresult = queryattempt(querylang)
-    if not jresult:      
+    if not jresult:     
+	if debug:
+	    print querylang 
 	return({'categories' : [], 'entities' : []})
     
     try:
 	categories = jresult['query']['results']['yctCategories']['yctCategory']
     except:
+	sys.exit(1)
 	categories = []
     
     try:    
@@ -35,6 +38,9 @@ def getYahooContent(u):
     
     elist = []
     tags = set()
+    if type(entities) == type(dict()):
+	entities = [entities]
+    
     for e in entities:
 	if e['text']['content'] not in tags:
 	    elist.append( {'score' : e['score'], 'text' : e['text']['content'] } )
@@ -49,19 +55,22 @@ def visible(element):
     return True
 
 
-def getURLContent(u, thresh = 50):
+def getURLContent(u, debug = 0, thresh = 50):
     html = urllib.urlopen(u).read()
     soup = BeautifulSoup.BeautifulSoup(html)
     texts = soup.findAll(text=True)
     visible_texts = filter(visible, texts)
     alltext = ""
     for line in visible_texts:
+	if debug:
+	    if len(line) > 25: print line
         if len(line) > thresh:
 	    line = unidecode(line)
 	    line = line.replace("]", "")
 	    line = line.replace("[", "")
 	    line = line.replace("'", "")
-	    line = line.replace("&", "\&")
+	    line = line.replace("&", "")
+	    line = line.replace("#", "")
             alltext += line.strip() + " "
     return alltext;
 

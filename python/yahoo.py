@@ -88,7 +88,7 @@ def queryattempt(query):
 	    return jresult
 	except:
 	    print "waiting three second****************"
-	    time.sleep(d)
+	    time.sleep(3)
 	    jresult = None
     return jresult
 

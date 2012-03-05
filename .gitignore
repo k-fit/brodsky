@@ -4,3 +4,4 @@ keys.pyc
 *.pyc
 *.pdf
 *.py.sw*
+.DS_Store

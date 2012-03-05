@@ -14,7 +14,7 @@ from hist_plot import *
 
 kw = otter.loadrc()
 
-def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug = 0):
+def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 1, debug = 0):
         r = otter.Resource('top', **kw)
         r(thresh = call, locale = 'en', perpage = 10) # note if call > 100, better do something else
         if (call != 'top100'):
@@ -61,7 +61,7 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug
 #	return important_data
 
 	if p:
-	    hist_plot(important_data)
+	    hist_plot(important_data[0:100])
 
 if __name__ == '__main__':
     topsy(debug = 1)

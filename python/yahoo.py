@@ -14,7 +14,12 @@ def getYahooContent(u, debug):
     key = keys.ydn_key
     querylang = "http://query.yahooapis.com/v1/public/yql?q=select * from contentanalysis.analyze where url=\'"+u +"\';&diagnostics=true&format=json&" + key
     
+    attempt = 0 
     jresult = queryattempt(querylang)
+    while not jresult and attempt < 2:
+	jresult = queryattempt(querylang)
+	attempt += 1
+    
     if not jresult:
 	print "getting text"
 	text = getURLContent(u, debug)

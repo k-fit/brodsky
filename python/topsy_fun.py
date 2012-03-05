@@ -11,10 +11,11 @@ import keys
 from gen_sent_fun import *
 from yahoo import *
 from hist_plot import *
+import datetime
 
 kw = otter.loadrc()
 
-def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug = 0):
+def topsy(startday, stopday, time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug = 0):
         r = otter.Resource('top', **kw)
         r(thresh = call, locale = 'en', perpage = 10) # note if call > 100, better do something else
         if (call != 'top100'):
@@ -44,14 +45,10 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug
 		important_data[i]['histogram'] = []
             attempt = 0
 	    important_data[i]['yahoo'] = getYahooContent(url, debug)
-            while important_data[i]['yahoo']['categories'] == [] and attempt < 3:
-		time.sleep(1)
-		attempt += 1
-		important_data[i]['yahoo'] = getYahooContent(url, debug)
 	    important_data[i]['gen_sent'] = []
 
             for k in range(len(important_data[i]['yahoo']['entities'])) : 
-                important_data[i]['gen_sent'].append (gen_sent(important_data[i]['yahoo']['entities'][k]['text'], start_date='20120215', end_date = '20120301', src = src, time_unit = time_unit))
+                important_data[i]['gen_sent'].append (gen_sent(important_data[i]['yahoo']['entities'][k]['text'], start_date=startday, end_date = stopday, src = src, time_unit = time_unit))
 
 	    print "result: " 
 	    pprint.pprint(important_data[i])
@@ -64,4 +61,8 @@ def topsy(time_unit = 'day', src = 'all_internet', call = 'top100', p = 0, debug
 	    hist_plot(important_data)
 
 if __name__ == '__main__':
-    topsy(debug = 1)
+    today = datetime.datetime.now()
+    twoweeksago = today - datetime.timedelta(days = 14)
+    today = today.strftime("%Y%m%d")
+    twoweeksago = twoweeksago.strftime("%Y%m%d") 
+    topsy(debug = 1, startday = twoweeksago, stopday = today)

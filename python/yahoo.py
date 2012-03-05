@@ -6,7 +6,7 @@ import BeautifulSoup
 import re
 from unidecode import unidecode
 import ast
-
+import time
 
 #url = 'http://www.cnn.com/2011/11/11/world/europe/greece-main/index.html'
 
@@ -14,17 +14,14 @@ def getYahooContent(u, debug):
     key = keys.ydn_key
     querylang = "http://query.yahooapis.com/v1/public/yql?q=select * from contentanalysis.analyze where url=\'"+u +"\';&diagnostics=true&format=json&" + key
     
-    attempt = 0 
     jresult = queryattempt(querylang)
-    while not jresult and attempt < 2:
-	jresult = queryattempt(querylang)
-	attempt += 1
     
     if not jresult:
 	print "getting text"
 	text = getURLContent(u, debug)
 	querylang =  "http://query.yahooapis.com/v1/public/yql?q=select * from contentanalysis.analyze where text=\'"+ text +"\';&diagnostics=true&format=json&" + key
 	jresult = queryattempt(querylang)
+    
     if not jresult:     
 	if debug:
 	    print querylang 
@@ -33,7 +30,6 @@ def getYahooContent(u, debug):
     try:
 	categories = jresult['query']['results']['yctCategories']['yctCategory']
     except:
-	#sys.exit(1)
 	categories = []
     
     try:    
@@ -83,10 +79,17 @@ def getURLContent(u, debug = 0, thresh = 50):
     return alltext;
 
 def queryattempt(query):
-    try:
-	jresult = ast.literal_eval(urllib.urlopen(query).read())
-	return jresult
-    except:
-	return None
+    attempt = 0 
+    jresult = None
+    while not jresult and attempt < 3:
+	try:
+	    attempt += 1
+	    jresult = ast.literal_eval(urllib.urlopen(query).read())
+	    return jresult
+	except:
+	    print "waiting three second****************"
+	    time.sleep(d)
+	    jresult = None
+    return jresult
 
 	

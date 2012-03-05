@@ -6,7 +6,6 @@ import re
 from unidecode import unidecode
 import ast
 import pprint
-import time
 import keys
 from gen_sent_fun import *
 from yahoo import *

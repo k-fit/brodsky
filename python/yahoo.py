@@ -19,6 +19,7 @@ def getYahooContent(u, debug):
     if not jresult:
 	print "getting text"
 	text = getURLContent(u, debug)
+	if len(text) > 5000: text = text[0:5000]
 	querylang =  "http://query.yahooapis.com/v1/public/yql?q=select * from contentanalysis.analyze where text=\'"+ text +"\';&diagnostics=true&format=json&" + key
 	jresult = queryattempt(querylang)
     
@@ -81,14 +82,14 @@ def getURLContent(u, debug = 0, thresh = 50):
 def queryattempt(query):
     attempt = 0 
     jresult = None
-    while not jresult and attempt < 3:
+    while not jresult and attempt < 2:
 	try:
 	    attempt += 1
 	    jresult = ast.literal_eval(urllib.urlopen(query).read())
 	    return jresult
 	except:
-	    print "waiting three second****************"
-	    time.sleep(3)
+	    #print "waiting three second****************"
+	    time.sleep(1)
 	    jresult = None
     return jresult
 

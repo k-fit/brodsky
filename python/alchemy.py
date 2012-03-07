@@ -1,35 +1,55 @@
+import urllib
+import sys
+sys.path.append("..")
+import keys
+import BeautifulSoup
+import re
+from unidecode import unidecode
+import ast
+import time
 
 
-# Load the AlchemyAPI module code.
-import AlchemyAPI
+
+def getAlchemy(url):
+        categories = getAlchemyCat(url)
+ 	keywords = getAlchemyKey(url)
+	concepts = getAlchemyCon(url)
+	return ({'categories' : categories, 'keywords' : keywords, 'concepts': concepts})
 
 
-# Create an AlchemyAPI object.
-alchemyObj = AlchemyAPI.AlchemyAPI()
+def getAlchemyCat(url):
+	key = keys.alch_key
+	queryCat = "http://access.alchemyapi.com/calls/url/URLGetCategory?apikey="+key+"&url=" + url + "&outputMode=json"
+	result_cat = queryattempt(queryCat)
+	return result_cat
+
+def getAlchemyKey(url):
+	key = keys.alch_key
+	queryKey = "http://access.alchemyapi.com/calls/url/URLGetRankedKeywords?apikey="+key+"&url=" + url + "&outputMode=json"	
+	result_key = queryattempt(queryKey)
+	return result_key
 
 
-# Load the API key from disk.
-alchemyObj.loadAPIKey("../alchemy_api_key.txt")
+def getAlchemyCon(url):
+	key = keys.alch_key
+	queryKey = "http://access.alchemyapi.com/calls/url/URLGetRankedConcepts?apikey="+key+"&url=" + url + "&outputMode=json"	
+	result_con = queryattempt(queryCon)
+	return result_con
 
 
-# Extract a ranked list of named entities from a web URL.
-result = alchemyObj.URLGetRankedNamedEntities("http://www.techcrunch.com/");
-print result
-
-
-# Extract a ranked list of named entities from a text string.
-result = alchemyObj.TextGetRankedNamedEntities("Hello my name is Bob.  I am speaking to you at this very moment.  Are you listening to me, Bob?");
-print result
-
-
-# Load a HTML document to analyze.
-htmlFileHandle = open("data/example.html", 'r')
-htmlFile = htmlFileHandle.read()
-htmlFileHandle.close()
-
-
-# Extract a ranked list of named entities from a HTML document.
-result = alchemyObj.HTMLGetRankedNamedEntities(htmlFile, "http://www.test.com/");
-print result
-
-
+def queryattempt(query):
+    attempt = 0 
+    jresult = None
+    while not jresult and attempt < 2:
+	try:
+	    attempt += 1
+	    r = urllib.urlopen(query).read()
+	    r = r.replace('\r', '')
+	    r = r.replace('\n', '')
+	    jresult = ast.literal_eval(r)
+	    return jresult
+	except:
+	    #print "waiting three second****************"
+	    time.sleep(1)
+	    jresult = None
+    return jresult

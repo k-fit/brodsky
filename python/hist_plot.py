@@ -42,7 +42,7 @@ def hist_pl(L):
 	ax = pylab.figure().gca()
 	#ax = fig.add_subplot(111)
 	title(L['target']['url'])
-	for item in L['gen_sent']:
+	for item in L['gen_sent:yahoo']:
 		dates = item['dates']
 		dates_num = [date2num(datetime.datetime.strptime(str(dates[i]), '%Y%m%d')) for i in range(len(dates))]
 		ax.plot_date(dates_num, item['neg_ref'], 'b-', label = 'neg_ref')
@@ -61,7 +61,7 @@ def hist_pl2(L):
 	ax = pylab.figure().gca()
 	#ax = fig.add_subplot(111)
 	title(L['target']['url'])
-	for item in L['gen_sent']:
+	for item in L['gen_sent:yahoo']:
 		dates = item['dates']
 		dates_num = [date2num(datetime.datetime.strptime(str(dates[i]), '%Y%m%d')) for i in range(len(dates))]
 		ax.plot_date(dates_num, item['sentiment'], 'r-', label = 'sentiment')

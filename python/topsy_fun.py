@@ -38,9 +38,12 @@ def topsy(startday, stopday, time_unit = 'day', src = 'all_internet', call = 'to
 	    title = unidecode(important_data[i]['target']['title'])
 	    url = unidecode(important_data[i]['target']['url'])
             print title, url
-	    h(q = title, slice = 3600, period = 24 * 30)
-            try:
-		important_data[i]['histogram'] = h.response.o['histogram']
+	    try:
+		    h(q = title, slice = 3600, period = 24 * 30)
+	    except:
+		    continue
+	    try:
+		    important_data[i]['histogram'] = h.response.o['histogram']
 	    except:
 		important_data[i]['histogram'] = []
             attempt = 0

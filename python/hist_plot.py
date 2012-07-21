@@ -16,17 +16,17 @@ def hist_plot(call):
 	no_plots = 0
 	no_plots_sent = 0
 	now = datetime.datetime.now().date()
-	pp = PdfPages('../plots/topsy_' + str(now.month) + '-'+ str(now.day) + '.pdf')
+	pp = PdfPages('../plots/topsy_' + str(now.month) + '-'+ str(now.day) + '2.pdf')
 	for item in call:
 		try:
 			hist_pl(item)
 			pp.savefig()
-		except ValueError:
+		except:
 			no_plots += 1
 		try:
 			hist_pl2(item)
 			pp.savefig()
-		except ValueError:
+		except:
 			no_plots_sent += 1
 
 			
